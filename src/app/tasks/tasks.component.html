@@ -1,0 +1,9 @@
+<ul>
+    @for (item of task; track task) 
+    {
+      <li [class]="item.isComplete? 'Completed' : ''" (click) = "item.toggleTask()">        
+        {{ item.name | uppercase}} - {{item.getDaysRemaining()}}
+
+      </li>
+    }
+</ul>
