@@ -5,14 +5,16 @@ export class Task
     isComplete: boolean = false;
     startDate: Date = new Date();
     expiringDate: Date = new Date();
-    constructor (id: number, name: string, isComplete: boolean, startDate: Date, expiringDate:Date) 
+    user: string = "";
+    constructor(id: number, name: string, isComplete: boolean, startDate: Date, expiringDate: Date, user: string = "") 
     {
         this.id = id;
         this.name = name;
         this.isComplete = isComplete;
         this.startDate = startDate;
         this.expiringDate = expiringDate;
-    } 
+        this.user = user;
+    }
 
     getDaysRemaining = () => 
     {

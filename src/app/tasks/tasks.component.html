@@ -1,9 +1,31 @@
-<ul>
-    @for (item of task; track task) 
-    {
-      <li [class]="item.isComplete? 'Completed' : ''" (click) = "item.toggleTask()">        
-        {{ item.name | uppercase}} - {{item.getDaysRemaining()}}
+<div class="filters">
+  <div>
+    <label for="userFilter">Filter by User:</label>
+    <select id="userFilter" [(ngModel)]="selectedUser" (change)="filterTasks()">
+      <option *ngFor="let user of getUniqueUsers()" [value]="user">{{user}}</option>
+    </select>
+  </div>
 
-      </li>
-    }
+  <div>
+    <label for="dateFilter">Filter by Date:</label>
+    <select id="dateFilter" [(ngModel)]="selectedDateFilter" (change)="filterTasks()">
+      <option value="all">All Dates</option>
+      <option value="today">Today</option>
+      <option value="upcoming">Upcoming</option>
+      <option value="overdue">Overdue</option>
+    </select>
+  </div>
+
+  <div *ngIf="selectedDateFilter === 'today' || selectedDateFilter === 'upcoming' || selectedDateFilter === 'overdue'">
+    <label for="filterDate">Date:</label>
+    <input type="date" id="filterDate" [(ngModel)]="filterDate" (change)="filterTasks()">
+  </div>
+</div>
+
+<ul>
+  @for (item of filteredTasks; track item.id) {
+    <li [class]="item.isComplete? 'Completed' : ''" (click)="item.toggleTask()">
+      {{ item.name | uppercase }} - {{ item.getDaysRemaining() }} (Assigned to: {{ item.user }})
+    </li>
+  }
 </ul>
